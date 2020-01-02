@@ -27,31 +27,35 @@ router.route("/add").post((req, res) => {
     .catch(err => res.status(400).json("Error: " + err));
 });
 
-// router.route('/:id').get((req, res) => {
-//   Issue.findById(req.params.id)
-//     .then(issue => res.json(issue))
-//     .catch(err => res.status(400).json('Error: ' + err));
-// });
+//returns a specific issue
+router.route("/:id").get((req, res) => {
+  Issue.findById(req.params.id)
+    .then(issue => res.json(issue))
+    .catch(err => res.status(400).json("Error: " + err));
+});
 
-// router.route('/:id').delete((req, res) => {
-//   Issue.findByIdAndDelete(req.params.id)
-//     .then(() => res.json('Issue deleted.'))
-//     .catch(err => res.status(400).json('Error: ' + err));
-// });
+//delete issue
+router.route("/:id").delete((req, res) => {
+  Issue.findByIdAndDelete(req.params.id)
+    .then(() => res.json("Issue deleted."))
+    .catch(err => res.status(400).json("Error: " + err));
+});
 
-// router.route('/update/:id').post((req, res) => {
-//     Issue.findById(req.params.id)
-//     .then(issue => {
-//       issue.username = req.body.username;
-//       issue.description = req.body.description;
-//       issue.duration = Number(req.body.duration);
-//       issue.date = Date.parse(req.body.date);
+//update issue by issue id
+router.route("/update/:id").post((req, res) => {
+  Issue.findById(req.params.id)
+    .then(issue => {
+      issue.username = req.body.username;
+      issue.description = req.body.description;
+      issue.duration = Number(req.body.duration);
+      issue.date = Date.parse(req.body.date);
 
-//       issue.save()
-//         .then(() => res.json('Issue updated!'))
-//         .catch(err => res.status(400).json('Error: ' + err));
-//     })
-//     .catch(err => res.status(400).json('Error: ' + err));
-// });
+      issue
+        .save()
+        .then(() => res.json("Issue updated!"))
+        .catch(err => res.status(400).json("Error: " + err));
+    })
+    .catch(err => res.status(400).json("Error: " + err));
+});
 
 module.exports = router;
